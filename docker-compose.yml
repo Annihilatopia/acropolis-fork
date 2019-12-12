@@ -1,0 +1,41 @@
+version: "3"
+services:
+  
+  postgres:
+    image: postgres:9.5
+    environment:
+      POSTGRES_PASSWORD: #{db_password}
+      POSTGRES_DB: polis
+    ports:
+      - "5432:5432"
+    volumes:
+      - "/home/ubuntu/postgresql_data:/var/lib/postgresql/data"
+      - "./polisServerContainer/polisServer/postgres/db_setup_draft.sql:/docker-entrypoint-initdb.d/db_setup_draft.sql"
+  polisserver:
+    build: polisServerContainer
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+  polisclientadmin:
+    build: polisClientAdminContainer
+    ports:
+      - "5002:5002"
+    depends_on:
+      - polisserver
+  polisclient:
+    build: polisClientContainer
+    ports:
+      - "80:80"
+    depends_on:
+      - polisserver
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+
+
+
