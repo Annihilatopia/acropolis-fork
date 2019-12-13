@@ -4,10 +4,12 @@ module.exports = {
   domainWhitelist: [
     "^localhost$",
     "^192\\.168\\.1\\.140$",
+    "^44\\.224\\.73\\.238$",
     "^pol\\.is",
     ".+\\.pol\\.is$",
     "^xip\\.io$",
     ".+\\.xip\\.io$",
+    "^dev-polis\\.zilliqa\\.com",
   ],
 
   DISABLE_INTERCOM: true,
@@ -21,7 +23,7 @@ module.exports = {
   SCP_SUBDIR_PREPROD: 'preprod',
   SCP_SUBDIR_PROD: 'prod',
 
-  SERVICE_URL: 'http://polisserver:5000',
+  SERVICE_URL: 'polisserver',
   // SERVICE_URL: 'https://preprod.pol.is',
 
   UPLOADER: 'scp',

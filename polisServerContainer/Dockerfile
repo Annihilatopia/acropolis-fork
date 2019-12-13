@@ -1,29 +1,33 @@
-FROM node:10.9
+FROM ubuntu:16.04
 
-# For admin functionality, fill this out
-ENV ADMIN_EMAILS []
-ENV ADMIN_EMAIL_DATA_EXPORT ""
-ENV ADMIN_EMAIL_DATA_EXPORT_TEST ""
-ENV ADMIN_EMAIL_EMAIL_TEST ""
-ENV ADMIN_UIDS []
 
-ENV DATABASE_FOR_READS_NAME DATABASE_URL
-ENV DATABASE_URL postgres://postgres:#{db_password}@postgres:5432/polis
-ENV DEV_MODE false
-ENV DISABLE_INTERCOM true
-ENV DOMAIN_OVERRIDE polisserver:5000
-ENV PORT 5000
-ENV STATIC_FILES_ADMINDASH_PORT 5002
-ENV STATIC_FILES_HOST polisclient
-ENV STATIC_FILES_PORT 80
-ENV STRIPE_SECRET_KEY sk_test_NFBDEThkpHCYBzXPJuBlY8TW
+RUN apt-get update && apt-get install -y git curl python-minimal build-essential postgresql-client libpq-dev
 
-WORKDIR /app
+# Setup nvm
+RUN mkdir -p /usr/local/nvm
+ENV NVM_DIR /usr/local/nvm
+ENV NODE_VERSION 10.9.0
 
-COPY polisServer/package*.json /app/
+RUN curl https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash \
+    && . $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
+
+ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
+ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+
+# Copy and setup Polis Server
+COPY polisServer/package*.json /polisServer/
+WORKDIR /polisServer
+RUN npm i -D eslint
 RUN npm install
 
-COPY polisServer /app/
+COPY .env_dev /polisServer/
+COPY polisServer /polisServer/
 
 EXPOSE 5000
-CMD node --max_old_space_size=400 --gc_interval=100 --harmony app.js
+#CMD node --max_old_space_size=400 --gc_interval=100 --harmony app.js
+ENTRYPOINT ["sh", "x"]
+
