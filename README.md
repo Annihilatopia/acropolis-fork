@@ -1,8 +1,14 @@
-# acropolis
+cropolis
 Polis deployment ochestration
 
 # TEMP STUFF
 Will be cleared when doing documentation
+
+### deployment variables location
+|File|Variables|
+|---|---|
+|polisServerContainer/.env_dev|#{db_password}|
+|docker-compose.yml|#{db_password}|
 
 ### Steps to setup a brand new server for acropolis
 ```
