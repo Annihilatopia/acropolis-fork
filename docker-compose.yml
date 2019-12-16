@@ -37,14 +37,14 @@ services:
 
 
 
-  #polisclient:
-  #  build: polisClientContainer
-  #  container_name: polisclient
-  #  hostname: polisclient
-  #  ports:
-  #    - "80:80"
-  #  depends_on:
-  #    - polisserver
+  polisclient:
+    build: polisClientContainer
+    container_name: polisclient
+    hostname: polisclient
+    ports:
+      - "80:80"
+    depends_on:
+      - polisserver
 
 
 

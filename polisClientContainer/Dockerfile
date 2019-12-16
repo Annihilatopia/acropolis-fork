@@ -25,6 +25,7 @@ RUN npm -v
 RUN node -v
 
 # Setup polisClientAdmin
+COPY config.js polisClient/src/
 COPY polisClient polisClient/
 WORKDIR polisClient
 RUN npm install
