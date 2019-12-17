@@ -1,0 +1,32 @@
+#server {
+#  listen 5004;
+#  server_name dev-polis.zilliqa.com
+#  
+#  location / {
+#    proxy_set_header X-Forwarded-For $remote_addr;
+#    proxy_set_header Host $http_host;
+#    proxy_pass "http://polisclientadmin:5002";
+#  }
+#}
+
+#server {
+#  listen 5003;
+#  server_name dev-polis.zilliqa.com
+
+#  location / {
+#    proxy_set_header X-Forwarded-For $remote_addr;
+#    proxy_set_header Host $http_host;
+#    proxy_pass "http://polisclient:80";
+#  }
+#}
+
+stream {
+  server {
+    listen 5004;
+    proxy_pass polisclientadmin:5002;
+  }
+  server {
+    listen 5003;
+    proxy_pass polisclient:80;
+  }
+}

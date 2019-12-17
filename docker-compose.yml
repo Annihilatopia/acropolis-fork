@@ -26,6 +26,18 @@ services:
 
 
 
+  polisrpx:
+    build: polisRPXContainer
+    container_name: polisrpx
+    hostname: polisrpx
+    ports:
+      - "5004:5004"
+      - "5003:5003"
+    depends_on:
+      - polisserver
+
+
+
   polisclientadmin:
     build: polisClientAdminContainer
     container_name: polisclientadmin
